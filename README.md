@@ -34,6 +34,8 @@ Here's a walkthrough of implemented user stories:
 
 <blockquote class="imgur-embed-pub" lang="en" data-id="oeGtn3k"><a href="//imgur.com/oeGtn3k">SimpleTODO</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
 
+<video class="post video-post" id="video-element" poster="//i.imgur.com/oeGtn3kh.jpg" preload="auto" muted="muted" webkit-playsinline="" style="width: 506px; height: 766px;"><source type="video/mp4" src="//i.imgur.com/oeGtn3k.mp4"></video>
+
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
