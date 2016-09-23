@@ -1,10 +1,10 @@
-# Pre-work - Simple TODO
+# Pre-work - *Simple TODO*
 
 Simple TODO is an android app that allows building a todo list and basic todo items management functionality including adding new items, editing and deleting an existing item.
 
-Submitted by: Eduardo Przysiezny
+Submitted by: **Eduardo Przysiezny**
 
-Time spent: 3 hours spent in total
+Time spent: 4 hours spent in total
 
 ## User Stories
 
@@ -14,9 +14,9 @@ The following **required** functionality is completed:
 * [x] User can **tap a todo item in the list and bring up an edit screen for the todo item** and then have any changes to the text reflected in the todo list.
 * [x] User can **persist todo items** and retrieve them properly on app restart
 
-The following **optional** features are **NOT** implemented:
+The following **optional** features are implemented:
 
-* [ ] Persist the todo items [into SQLite](http://guides.codepath.com/android/Persisting-Data-to-the-Device#sqlite) instead of a text file
+* [x] Persist the todo items [into SQLite](http://guides.codepath.com/android/Persisting-Data-to-the-Device#sqlite) instead of a text file
 * [ ] Improve style of the todo items in the list [using a custom adapter](http://guides.codepath.com/android/Using-an-ArrayAdapter-with-ListView)
 * [ ] Add support for completion due dates for todo items (and display within listview item)
 * [ ] Use a [DialogFragment](http://guides.codepath.com/android/Using-DialogFragment) instead of new Activity for editing items
@@ -31,8 +31,6 @@ The following **additional** features are implemented:
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
-
-<blockquote class="imgur-embed-pub" lang="en" data-id="oeGtn3k"><a href="//imgur.com/oeGtn3k">SimpleTODO</a></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
 
 <img src='http://i.imgur.com/oeGtn3k.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
