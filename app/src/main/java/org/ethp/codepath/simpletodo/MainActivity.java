@@ -10,12 +10,17 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.activeandroid.query.Select;
+
 import org.apache.commons.io.FileUtils;
+import org.ethp.codepath.simpletodo.model.TodoItemModel;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+import static android.R.attr.category;
 import static android.R.attr.data;
 import static android.R.attr.name;
 
@@ -23,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int EDIT_ITEM_CODE = 10;
 
-    private ArrayList<String> items;
-    private ArrayAdapter<String> itemsAdapter;
+    private List<TodoItemModel> items;
+    private ArrayAdapter<TodoItemModel> itemsAdapter;
     ListView lvItems;
 
     @Override
@@ -32,11 +37,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lvItems = (ListView) findViewById(R.id.lvItems);
-        items = new ArrayList<String>();
+        items = new ArrayList<TodoItemModel>();
 
         readItems();
 
-        itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+        itemsAdapter = new ArrayAdapter<TodoItemModel>(this, android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
 
         setupListViewListener();
@@ -46,10 +51,12 @@ public class MainActivity extends AppCompatActivity {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String newItemText = etNewItem.getText().toString();
         if (!newItemText.isEmpty()) {
-            itemsAdapter.add(newItemText);
+            TodoItemModel todoItem = new TodoItemModel(items.size(), newItemText);
+            todoItem.save();
+
+            itemsAdapter.add(todoItem);
         }
         etNewItem.setText("");
-        writeItems();
     }
 
     private void setupListViewListener() {
@@ -59,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> adapter, View item, int pos, long id) {
                         Intent intent = new Intent(MainActivity.this, EditItemActivity.class);
                         intent.putExtra("item_index", pos);
-                        intent.putExtra("item", items.get(pos));
+                        intent.putExtra("item", items.get(pos).toString());
                         startActivityForResult(intent, EDIT_ITEM_CODE);
                     }
                 }
@@ -69,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapter, View item, int pos, long id) {
-                        items.remove(pos);
+                        TodoItemModel im = items.remove(pos);
+                        im.delete();
                         itemsAdapter.notifyDataSetChanged();
-                        writeItems();
                         return true;
                     }
                 }
@@ -85,19 +92,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void readItems() {
-        try {
-            items = new ArrayList<String>(FileUtils.readLines(getTodoFile()));
-        } catch (IOException e) {
-            items = new ArrayList<String>();
-        }
-    }
-
-    private void writeItems() {
-        try {
-            FileUtils.writeLines(getTodoFile(), items);
-        } catch (IOException e) {
-            e.printStackTrace();;
-        }
+            items = new Select()
+                    .from(TodoItemModel.class).orderBy("listIdx ASC")
+                    .execute();
     }
 
     @Override
@@ -107,15 +104,17 @@ public class MainActivity extends AppCompatActivity {
             int itemIndex = resultData.getExtras().getInt("item_index", 0);
 
             if (item.isEmpty()) {
-                items.remove(itemIndex);
+                TodoItemModel im = items.remove(itemIndex);
+                im.delete();
             }
             else
             {
-                items.set(itemIndex, item);
+                TodoItemModel im = items.get(itemIndex);
+                im.setTask(item);
+                im.save();
             }
 
             itemsAdapter.notifyDataSetChanged();
-            writeItems();
 
             Toast.makeText(this, "Item edited.", Toast.LENGTH_SHORT).show();
         }
