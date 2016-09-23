@@ -3,11 +3,17 @@
     package="org.ethp.codepath.simpletodo">
 
     <application
+        android:name="org.ethp.codepath.simpletodo.SimpleTodoApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data android:name="AA_DB_NAME" android:value="ethp_simple_todo.db" />
+        <meta-data android:name="AA_DB_VERSION" android:value="1" />
+        <meta-data android:name="AA_MODELS" android:value="org.ethp.codepath.simpletodo.model.TodoItemModel" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
